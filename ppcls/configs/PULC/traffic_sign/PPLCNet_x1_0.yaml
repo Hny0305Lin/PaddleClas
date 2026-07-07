@@ -8,9 +8,9 @@ Global:
   eval_during_train: True
   eval_interval: 1
   start_eval_epoch: 0
-  epochs: 10
+  epochs: 20
   print_batch_step: 10
-  use_visualdl: False
+  use_visualdl: True
   # used for static mode and model export
   image_shape: [3, 224, 224]
   save_inference_dir: ./inference
@@ -18,6 +18,15 @@ Global:
   to_static: False
   use_dali: False
 
+# mixed precision training
+AMP:
+  scale_loss: 128.0
+  use_dynamic_loss_scaling: True
+  level: O1
+
+# model ema
+EMA:
+  decay: 0.9999
 
 # model architecture
 Arch:
@@ -41,8 +50,8 @@ Optimizer:
   momentum: 0.9
   lr:
     name: Cosine
-    learning_rate: 0.02
-    warmup_epoch: 5
+    learning_rate: 0.04
+    warmup_epoch: 2
   regularizer:
     name: 'L2'
     coeff: 0.00004
@@ -82,11 +91,11 @@ DataLoader:
             mode: pixel
     sampler:
       name: DistributedBatchSampler
-      batch_size: 64
+      batch_size: 512
       drop_last: False
       shuffle: True
     loader:
-      num_workers: 8
+      num_workers: 4
       use_shared_memory: True
 
   Eval:

@@ -15,3 +15,17 @@ nohup.out
 .idea
 inference/
 test.py
+
+# dataset (do not redistribute)
+dataset/
+*.tar
+
+# exported models (too large for git)
+deploy/models/
+
+# logs
+*.log
+
+# misc temp/junk
+nul
+*.bak
